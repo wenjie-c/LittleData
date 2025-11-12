@@ -19,6 +19,7 @@ private:
 public:
   class Iterator {
   public:
+    Iterator();
     /**
      * @brief References the element.
      *

@@ -307,6 +307,38 @@ TEST(LinkedBinaryTreeTest, SizeTest)
   ASSERT_EQ(9, arbol.size());
 }
 
+TEST(ComparatorTest, CompareTest)
+{
+  Point2 a = {.x = 2, .y = 2};
+  Point2 b = {.x = 5, .y = 1};
+
+  LeftRight lr;
+  BottomTop bt;
+
+  ASSERT_TRUE(lr(a,b));
+  ASSERT_TRUE(bt(b,a));
+}
+
+TEST(ListPriorityQueueTest, IndexTest)
+{
+  LittleData::ListPriorityQueue<LittleData::Pair, LittleData::IsLess>
+    queue;
+
+    ASSERT_TRUE(queue.empty());
+    
+    queue.insert(LittleData::Pair(2,5));
+    queue.insert(LittleData::Pair(2,4));
+    queue.insert(LittleData::Pair(3,7));
+    queue.insert(LittleData::Pair(1,8));
+
+    ASSERT_EQ(queue.size(), 4);
+    ASSERT_EQ(queue.min().second, 8);
+
+    queue.removeMin();
+    ASSERT_EQ(queue.size(), 3);
+    ASSERT_EQ(queue.min().second, 5);
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

@@ -56,6 +56,17 @@ class IBinaryTree{
   //virtual Position removeAboveExternal(const Position & p) {}
 };
 
+template<typename E, typename C>
+class IPriorityQueue
+{
+  public:
+  virtual int size() const {}
+  virtual bool empty() const {}
+  virtual void insert(const E & e) {}
+  virtual const E & min() const {}
+  virtual void removeMin() {}
+};
+
 } // namespace LittleData
 
 #endif NODE_HPP

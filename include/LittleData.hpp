@@ -7,3 +7,5 @@
 #include <ArrayStack.hpp>
 #include <ArrayQueue.hpp>
 #include <LinkedBinaryTree.hpp>
+#include <Comparator.hpp>
+#include<ListPriorityQueue.hpp>

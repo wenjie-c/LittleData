@@ -4,6 +4,7 @@
 using namespace std;
 
 namespace LittleData {
+template <typename E>NodeList<E>::Iterator::Iterator() {}
 template <typename E> E &NodeList<E>::Iterator::operator*() { return v->data; }
 
 template <typename E>
@@ -110,6 +111,7 @@ NodeList<E>::NodeList(NodeList<E> & tobeCopied)
 
 #pragma region EXPLICIT_INSTATIATION
 template class NodeList<int>;
+template class LittleData::NodeList<pair<int,int>>;
 #pragma endregion EXPLICIT_INSTATIATION
 
 } // namespace LittleData

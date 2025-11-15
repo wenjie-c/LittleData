@@ -5,6 +5,7 @@ using namespace std;
 #ifndef COMPARATOR_HPP
 #define COMPARATOR_HPP
 
+namespace LittleData {
 template<typename E>
 class Comparator
 {
@@ -36,6 +37,8 @@ class BottomTop : Comparator<Point2>
         return p.y < q.y;
     }
 };
+
+}
 
 #pragma endregion EXAMPLES
 

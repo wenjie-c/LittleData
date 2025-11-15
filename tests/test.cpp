@@ -309,6 +309,11 @@ TEST(LinkedBinaryTreeTest, SizeTest)
 
 TEST(ComparatorTest, CompareTest)
 {
+  using LittleData::Point2;
+  using LittleData::LeftRight;
+  using LittleData::BottomTop;
+
+  
   Point2 a = {.x = 2, .y = 2};
   Point2 b = {.x = 5, .y = 1};
 

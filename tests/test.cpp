@@ -344,6 +344,18 @@ TEST(ListPriorityQueueTest, IndexTest)
     ASSERT_EQ(queue.min().second, 5);
 }
 
+TEST(VectorCompleteTree, sizeTest)
+{
+  LittleData::VectorCompleteTree<int> tree;
+  tree.addLast(4);
+  tree.addLast(8);
+  tree.addLast(7);
+  ASSERT_EQ(tree.size(), 3);
+
+  int last = *tree.last();
+  ASSERT_EQ(last, 7);
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

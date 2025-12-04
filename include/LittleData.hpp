@@ -9,3 +9,4 @@
 #include <LinkedBinaryTree.hpp>
 #include <Comparator.hpp>
 #include<ListPriorityQueue.hpp>
+#include <VectorCompleteTree.hpp>

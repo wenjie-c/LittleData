@@ -60,12 +60,7 @@ private:
 };
 
 typedef pair<int, int> Pair; // Key-Value pair.
-class IsLess : Comparator<Pair> {
-  public:
-  bool operator()(const Pair &p, const Pair &q) override {
-    return p.first < q.first;
-  }
-};
+
 
 } // namespace LittleData
 

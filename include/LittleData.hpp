@@ -10,3 +10,4 @@
 #include <Comparator.hpp>
 #include<ListPriorityQueue.hpp>
 #include <VectorCompleteTree.hpp>
+#include <HeapPriorityQueue.hpp>

@@ -70,6 +70,7 @@ void VectorCompleteTree<E>::swap(const Position &p, const Position &q) {
 
 #pragma region EXPLICIT_INSTATIATION
 template class LittleData::VectorCompleteTree<int>;
+template class LittleData::VectorCompleteTree<pair<int,int>>;
 #pragma endregion EXPLICIT_INSTATIATION
 
 } // namespace LittleData

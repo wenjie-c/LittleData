@@ -1,4 +1,5 @@
 #include<iostream>
+#include <definitions.hpp>
 
 using namespace std;
 
@@ -35,6 +36,13 @@ class BottomTop : Comparator<Point2>
     bool operator()(const Point2 & p, const Point2 & q) override
     {
         return p.y < q.y;
+    }
+};
+
+class IsLess : Comparator<Pair> {
+    public:
+    bool operator()(const Pair &p, const Pair &q) override {
+      return p.first < q.first;
     }
 };
 

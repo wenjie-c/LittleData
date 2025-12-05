@@ -344,7 +344,7 @@ TEST(ListPriorityQueueTest, IndexTest)
     ASSERT_EQ(queue.min().second, 5);
 }
 
-TEST(VectorCompleteTree, sizeTest)
+TEST(VectorCompleteTreeTest, sizeTest)
 {
   LittleData::VectorCompleteTree<int> tree;
   tree.addLast(4);
@@ -354,6 +354,24 @@ TEST(VectorCompleteTree, sizeTest)
 
   int last = *tree.last();
   ASSERT_EQ(last, 7);
+}
+
+TEST(HeapPriorityQueueTest, sizeTest)
+{
+  LittleData::HeapPriorityQueue<LittleData::Pair, LittleData::IsLess> queue;
+  ASSERT_TRUE(queue.empty());
+
+  queue.insert(LittleData::Pair(2,5));
+    queue.insert(LittleData::Pair(2,4));
+    queue.insert(LittleData::Pair(3,7));
+    queue.insert(LittleData::Pair(1,8));
+
+    ASSERT_EQ(queue.size(), 4);
+    ASSERT_EQ(queue.min().second, 8);
+
+    queue.removeMin();
+    ASSERT_EQ(queue.size(), 3);
+    ASSERT_TRUE(queue.min().second == 4 || queue.min().second == 5);
 }
 
 int main(int argc, char **argv) {

@@ -67,6 +67,8 @@ class IPriorityQueue
   virtual void removeMin() {}
 };
 
+typedef pair<int, int> Pair; // Key-Value pair.
+
 } // namespace LittleData
 
 #endif NODE_HPP

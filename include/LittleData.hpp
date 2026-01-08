@@ -11,3 +11,4 @@
 #include<ListPriorityQueue.hpp>
 #include <VectorCompleteTree.hpp>
 #include <HeapPriorityQueue.hpp>
+#include <AdaptPriorityQueue.hpp>

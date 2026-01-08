@@ -374,6 +374,36 @@ TEST(HeapPriorityQueueTest, sizeTest)
     ASSERT_TRUE(queue.min().second == 4 || queue.min().second == 5);
 }
 
+TEST(AdaptPriorityQueueTest, indexTest)
+{
+  LittleData::AdaptPriorityQueue<LittleData::Pair, LittleData::IsLess> queue;
+  typename LittleData::AdaptPriorityQueue<LittleData::Pair, LittleData::IsLess>::Position Position;
+
+  LittleData::Pair first(2,5);
+  LittleData::Pair second(1,42);
+  LittleData::Pair third(3, 7);
+  LittleData::Pair extra(3,4);
+  
+  auto a = queue.insert(first);
+  auto b = queue.insert(second);
+  auto c = queue.insert(third);
+  
+
+  ASSERT_EQ(queue.size(), 3);
+  //ASSERT_EQ((*a).second, 42) // doesn't work
+  ASSERT_EQ(queue.min().second,42);
+
+queue.replace(c, extra);
+
+  queue.removeMin();
+  ASSERT_EQ(queue.size(), 2);
+  ASSERT_EQ(queue.min().second,5);
+
+  queue.removeMin();
+  ASSERT_EQ(queue.size(), 1);
+  ASSERT_EQ(queue.min().second,4);
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

@@ -10,6 +10,11 @@ namespace LittleData
     {
         return v->value;
     }
+
+    template<typename E>
+    E * LinkedBinaryTree<E>::Position::operator->() const{
+        return &v->value;
+    }
     template<typename E>
     typename LinkedBinaryTree<E>::Position LinkedBinaryTree<E>::Position::left() const
     {

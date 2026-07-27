@@ -1,4 +1,5 @@
 #include <LittleData.hpp>
+#include<string>
 #include <cstddef>
 #include <gtest/gtest.h>
 
@@ -402,6 +403,35 @@ queue.replace(c, extra);
   queue.removeMin();
   ASSERT_EQ(queue.size(), 1);
   ASSERT_EQ(queue.min().second,4);
+}
+TEST(SearchTreeTest, MainTest)
+{
+  SearchTree<Entry<int, string>> S;
+  S.insert(1, "one");
+  S.insert(3, "three");
+  S.insert(5, "five");
+  S.insert(7, "seven");
+  S.insert(9, "nine");
+  S.insert(11, "eleven");
+
+  ASSERT_EQ(S.size(), 6);
+  bool areSame = (*S.find(1)).value() == "one";
+  ASSERT_TRUE(areSame);
+  areSame = (*S.find(3)).value() == "three";
+  ASSERT_TRUE(areSame);
+  areSame = (*S.find(2)).value() == "two";
+  ASSERT_FALSE(areSame);
+
+  S.insert(6, "six");
+  ASSERT_EQ(S.size(), 7);
+  areSame = (*S.find(6)).value() == "six";
+  ASSERT_TRUE(areSame);
+
+  ASSERT_NO_THROW(S.erase(7));
+  ASSERT_EQ(S.size(), 6);
+
+  areSame = (*S.find(6)).value() == "six";
+  ASSERT_TRUE(areSame);
 }
 
 int main(int argc, char **argv) {

@@ -12,3 +12,4 @@
 #include <VectorCompleteTree.hpp>
 #include <HeapPriorityQueue.hpp>
 #include <AdaptPriorityQueue.hpp>
+#include <SearchTree.hpp>

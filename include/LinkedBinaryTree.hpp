@@ -1,3 +1,4 @@
+
 #include <cstddef>
 #include<definitions.hpp>
 
@@ -27,6 +28,9 @@ class LinkedBinaryTree : public IBinaryTree<E>
          * @return E& 
          */
         E & operator*();
+
+        E * operator->() const;
+
         /**
          * @brief get the left child.
          * 
@@ -61,6 +65,8 @@ class LinkedBinaryTree : public IBinaryTree<E>
         bool isExternal() const;
         friend class LinkedBinaryTree<E>;
         friend class DLinkedList<LinkedBinaryTree<E>::Position>;
+
+        friend class SearchTree;
     };
     typedef DLinkedList<LinkedBinaryTree<E>::Position> PositionList;
     public:

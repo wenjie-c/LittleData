@@ -309,10 +309,10 @@ public:
    * @return Iterator
    */
   Iterator end();
-
-protected:
   typedef LittleData::LinkedBinaryTree<E> BinaryTree;
   typedef typename BinaryTree::Position TPos;
+protected:
+  
 
   /**
    * @brief Get a virtual root.

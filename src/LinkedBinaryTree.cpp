@@ -141,6 +141,13 @@ namespace LittleData
         return node;
     }
 
+    template<typename E>
+    void LinkedBinaryTree<E>::Position::swap(Position & b) {
+        auto valueA = v->value;
+        v->value = b.v->value;
+        b.v->value = valueA;
+    }
+
     
 #pragma region EXPLICIT_INSTATIATION
 template class LinkedBinaryTree<int>;

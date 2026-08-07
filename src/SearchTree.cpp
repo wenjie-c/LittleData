@@ -259,6 +259,14 @@ template <typename E> void SearchTree<E>::erase(const Iterator &p) {
   erase(p._v);
 }
 
+template <typename E>
+typename LittleData::LinkedBinaryTree<E>::Position SearchTree<E>::restructure(const TPos &v) {
+  auto y = v.parent();
+  auto z = y.parent();
+  // TODO finish restructure function
+
+}
+
 
 #pragma region EXPLICIT_INSTATIATION
 template class Entry<int,string>;

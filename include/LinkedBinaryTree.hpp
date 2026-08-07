@@ -31,6 +31,8 @@ class LinkedBinaryTree : public IBinaryTree<E>
 
         E * operator->() const;
 
+        bool operator==(Position  pos) const {return this->v == pos.v;}
+
         /**
          * @brief get the left child.
          * 
@@ -63,6 +65,14 @@ class LinkedBinaryTree : public IBinaryTree<E>
          * @return false 
          */
         bool isExternal() const;
+
+        /**
+         * @brief Swap both 
+         * 
+         * @param b 
+         */
+        void swap(Position & b);
+
         friend class LinkedBinaryTree<E>;
         friend class DLinkedList<LinkedBinaryTree<E>::Position>;
 

@@ -434,6 +434,21 @@ TEST(SearchTreeTest, MainTest)
   ASSERT_TRUE(areSame);
 }
 
+TEST(AVLTree, MainTest)
+{
+  AVLTree<Entry<int, string>> T;
+
+  /* T.insert(1, "one");
+  T.insert(3, "three");
+  T.insert(5, "five");
+  T.insert(7, "seven");
+  T.insert(9, "nine");
+  T.insert(11, "eleven");
+
+  ASSERT_EQ(T.size(), 6); */
+  // AVLTree.rebalance(const TPos&) not fully implemented since LinkedBinaryTree.restructure is not implemented yet either
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

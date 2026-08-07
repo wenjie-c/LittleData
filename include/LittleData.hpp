@@ -13,3 +13,4 @@
 #include <HeapPriorityQueue.hpp>
 #include <AdaptPriorityQueue.hpp>
 #include <SearchTree.hpp>
+#include <AVLTree.hpp>

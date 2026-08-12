@@ -1,24 +1,38 @@
 
 #include <SearchTree.hpp>
+#include <algorithm>
 #ifndef AVLEntry_HPP
 #define AVLEntry_HPP
 
-template <typename E> class AVLTree;
+// This source code is based on
+// https://www.geeksforgeeks.org/cpp/cpp-program-to-implement-avl-tree/
 
-template <typename E> class AVLEntry : public E {
-private:
-  int ht;
+template <typename K, typename V> class AVLTree;
+
+/**
+ * @brief An AVLNode, it works as an Entry for an AVLTree
+ *
+ * @tparam K
+ * @tparam V
+ */
+template <typename K, typename V> class AVLNode {
 
 protected:
-  typedef typename E::Key K;
-  typedef typename E::Value V;
+  /* typedef typename E::Key K;
+  typedef typename E::Value V; */
+  int ht;
+  K _key;
+  V _value;
 
-  int height() const { return ht; }
-  void setHeight(int h) { ht = h; }
+  AVLNode<K, V> *_left;
+  AVLNode<K, V> *_right;
 
 public:
-  AVLEntry(const K &k = K(), const V &v = V()) : E(k, v), ht(0) {}
-  friend class AVLTree<E>;
+  AVLNode(const K key, const V value)
+      : ht(1), _key(key), _value(value), _left(nullptr), _right(nullptr) {}
+  int height() const { return ht; }
+  void setHeight(int h) { ht = h; }
+  friend class AVLTree<K, V>;
 };
 
 #endif // AVLEntry_HPP
@@ -26,29 +40,25 @@ public:
 #ifndef AVLTree_HPP
 #define AVLTree_HPP
 
-template <typename E> class AVLTree : public SearchTree<AVLEntry<E>> {
-public:
-  typedef AVLEntry<E> _AVLEntry;
-  typedef typename SearchTree<_AVLEntry>::Iterator Iterator;
-  typedef SearchTree<_AVLEntry> ST;
-  typedef typename ST::TPos TPos;
-protected:
-#pragma region AVLTree_VARIABLES
-  typedef typename _AVLEntry::Key K;
-  typedef typename _AVLEntry::Value V;
-  
-#pragma endregion AVLTree_VARIABLES
-public:
-  AVLTree();
-  Iterator insert(const K &k, const V &x); // insert (k,x)
-  void erase(const K &k);
-  void erase(const Iterator &p);
+template <typename K, typename V> class AVLTree {
+private:
+  AVLNode<K, V> *root;
 
-protected:
-  int height(const TPos &v) const;
-  void setHeight(TPos v);
-  bool isBalanced(const TPos &v) const;
-  TPos tallGrandchild(const TPos &z) const;
-  void rebalance(const TPos &v);
+  int height(AVLNode<K, V> *node);
+  int balanceFactor(AVLNode<K, V> *node);
+  AVLNode<K, V> *rightRotate(AVLNode<K, V> *y);
+  AVLNode<K, V> *leftRotate(AVLNode<K, V> *x);
+  AVLNode<K, V> *insert(AVLNode<K, V> *node, const K key, const V value);
+  AVLNode<K, V> *minValueNode(AVLNode<K, V> *node);
+  AVLNode<K, V> *deleteNode(AVLNode<K, V> *root, K key);
+  void inorder(AVLNode<K, V> *root);
+  bool search(AVLNode<K, V> *root, K key);
+
+public:
+  AVLTree<K, V>() : root(NULL) {}
+  void insert(const K key, const V value);
+  void remove(const K key);
+  bool search(K key);
+  void printInorder();
 };
 #endif // AVLTree_HPP

@@ -1,7 +1,7 @@
 #include <LittleData.hpp>
-#include<string>
 #include <cstddef>
 #include <gtest/gtest.h>
+#include <string>
 
 using namespace std;
 
@@ -274,8 +274,7 @@ TEST(NodeSequenceTest, IndexTest) {
   ASSERT_EQ(*position2, input3);
 }
 
-TEST(LinkedBinaryTreeTest, SizeTest)
-{
+TEST(LinkedBinaryTreeTest, SizeTest) {
   LittleData::LinkedBinaryTree<int> arbol;
   ASSERT_EQ(0, arbol.size());
   arbol.addRoot();
@@ -308,45 +307,40 @@ TEST(LinkedBinaryTreeTest, SizeTest)
   ASSERT_EQ(9, arbol.size());
 }
 
-TEST(ComparatorTest, CompareTest)
-{
-  using LittleData::Point2;
-  using LittleData::LeftRight;
+TEST(ComparatorTest, CompareTest) {
   using LittleData::BottomTop;
+  using LittleData::LeftRight;
+  using LittleData::Point2;
 
-  
   Point2 a = {.x = 2, .y = 2};
   Point2 b = {.x = 5, .y = 1};
 
   LeftRight lr;
   BottomTop bt;
 
-  ASSERT_TRUE(lr(a,b));
-  ASSERT_TRUE(bt(b,a));
+  ASSERT_TRUE(lr(a, b));
+  ASSERT_TRUE(bt(b, a));
 }
 
-TEST(ListPriorityQueueTest, IndexTest)
-{
-  LittleData::ListPriorityQueue<LittleData::Pair, LittleData::IsLess>
-    queue;
+TEST(ListPriorityQueueTest, IndexTest) {
+  LittleData::ListPriorityQueue<LittleData::Pair, LittleData::IsLess> queue;
 
-    ASSERT_TRUE(queue.empty());
-    
-    queue.insert(LittleData::Pair(2,5));
-    queue.insert(LittleData::Pair(2,4));
-    queue.insert(LittleData::Pair(3,7));
-    queue.insert(LittleData::Pair(1,8));
+  ASSERT_TRUE(queue.empty());
 
-    ASSERT_EQ(queue.size(), 4);
-    ASSERT_EQ(queue.min().second, 8);
+  queue.insert(LittleData::Pair(2, 5));
+  queue.insert(LittleData::Pair(2, 4));
+  queue.insert(LittleData::Pair(3, 7));
+  queue.insert(LittleData::Pair(1, 8));
 
-    queue.removeMin();
-    ASSERT_EQ(queue.size(), 3);
-    ASSERT_EQ(queue.min().second, 5);
+  ASSERT_EQ(queue.size(), 4);
+  ASSERT_EQ(queue.min().second, 8);
+
+  queue.removeMin();
+  ASSERT_EQ(queue.size(), 3);
+  ASSERT_EQ(queue.min().second, 5);
 }
 
-TEST(VectorCompleteTreeTest, sizeTest)
-{
+TEST(VectorCompleteTreeTest, sizeTest) {
   LittleData::VectorCompleteTree<int> tree;
   tree.addLast(4);
   tree.addLast(8);
@@ -357,55 +351,52 @@ TEST(VectorCompleteTreeTest, sizeTest)
   ASSERT_EQ(last, 7);
 }
 
-TEST(HeapPriorityQueueTest, sizeTest)
-{
+TEST(HeapPriorityQueueTest, sizeTest) {
   LittleData::HeapPriorityQueue<LittleData::Pair, LittleData::IsLess> queue;
   ASSERT_TRUE(queue.empty());
 
-  queue.insert(LittleData::Pair(2,5));
-    queue.insert(LittleData::Pair(2,4));
-    queue.insert(LittleData::Pair(3,7));
-    queue.insert(LittleData::Pair(1,8));
+  queue.insert(LittleData::Pair(2, 5));
+  queue.insert(LittleData::Pair(2, 4));
+  queue.insert(LittleData::Pair(3, 7));
+  queue.insert(LittleData::Pair(1, 8));
 
-    ASSERT_EQ(queue.size(), 4);
-    ASSERT_EQ(queue.min().second, 8);
+  ASSERT_EQ(queue.size(), 4);
+  ASSERT_EQ(queue.min().second, 8);
 
-    queue.removeMin();
-    ASSERT_EQ(queue.size(), 3);
-    ASSERT_TRUE(queue.min().second == 4 || queue.min().second == 5);
+  queue.removeMin();
+  ASSERT_EQ(queue.size(), 3);
+  ASSERT_TRUE(queue.min().second == 4 || queue.min().second == 5);
 }
 
-TEST(AdaptPriorityQueueTest, indexTest)
-{
+TEST(AdaptPriorityQueueTest, indexTest) {
   LittleData::AdaptPriorityQueue<LittleData::Pair, LittleData::IsLess> queue;
-  typename LittleData::AdaptPriorityQueue<LittleData::Pair, LittleData::IsLess>::Position Position;
+  typename LittleData::AdaptPriorityQueue<
+      LittleData::Pair, LittleData::IsLess>::Position Position;
 
-  LittleData::Pair first(2,5);
-  LittleData::Pair second(1,42);
+  LittleData::Pair first(2, 5);
+  LittleData::Pair second(1, 42);
   LittleData::Pair third(3, 7);
-  LittleData::Pair extra(3,4);
-  
+  LittleData::Pair extra(3, 4);
+
   auto a = queue.insert(first);
   auto b = queue.insert(second);
   auto c = queue.insert(third);
-  
 
   ASSERT_EQ(queue.size(), 3);
-  //ASSERT_EQ((*a).second, 42) // doesn't work
-  ASSERT_EQ(queue.min().second,42);
+  // ASSERT_EQ((*a).second, 42) // doesn't work
+  ASSERT_EQ(queue.min().second, 42);
 
-queue.replace(c, extra);
+  queue.replace(c, extra);
 
   queue.removeMin();
   ASSERT_EQ(queue.size(), 2);
-  ASSERT_EQ(queue.min().second,5);
+  ASSERT_EQ(queue.min().second, 5);
 
   queue.removeMin();
   ASSERT_EQ(queue.size(), 1);
-  ASSERT_EQ(queue.min().second,4);
+  ASSERT_EQ(queue.min().second, 4);
 }
-TEST(SearchTreeTest, MainTest)
-{
+TEST(SearchTreeTest, MainTest) {
   SearchTree<Entry<int, string>> S;
   S.insert(1, "one");
   S.insert(3, "three");
@@ -434,19 +425,25 @@ TEST(SearchTreeTest, MainTest)
   ASSERT_TRUE(areSame);
 }
 
-TEST(AVLTree, MainTest)
-{
-  AVLTree<Entry<int, string>> T;
+TEST(AVLTree, MainTest) {
+  AVLTree<int, string> avl;
+  avl.insert(10, "ten");
+  avl.insert(20, "twenty");
+  avl.insert(30, "thirty");
+  avl.insert(40, "fourty");
+  avl.insert(50, "fifty");
+  avl.insert(25, "twenty-five");
 
-  /* T.insert(1, "one");
-  T.insert(3, "three");
-  T.insert(5, "five");
-  T.insert(7, "seven");
-  T.insert(9, "nine");
-  T.insert(11, "eleven");
+  cout << "Inorder traversal of the AVL tree: ";
+  ASSERT_NO_FATAL_FAILURE(avl.printInorder());
 
-  ASSERT_EQ(T.size(), 6); */
-  // AVLTree.rebalance(const TPos&) not fully implemented since LinkedBinaryTree.restructure is not implemented yet either
+  // Remove a node from the AVL tree
+  ASSERT_NO_FATAL_FAILURE(avl.remove(30));
+  cout << "Inorder traversal after removing 30: ";
+  ASSERT_NO_FATAL_FAILURE(avl.printInorder());
+
+  ASSERT_TRUE(avl.search(25));
+  ASSERT_FALSE(avl.search(30));
 }
 
 int main(int argc, char **argv) {

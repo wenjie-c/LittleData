@@ -1,77 +1,178 @@
 #include "SearchTree.cpp"
 #include <AVLTree.hpp>
 #include <algorithm>
+#include <cstddef>
+#include <exception>
 
-template <typename E> AVLTree<E>::AVLTree() : ST() {}
-
-template <typename E>
-typename AVLTree<E>::Iterator AVLTree<E>::insert(const K &k, const V &x) {
-  TPos v = this->inserter(k, x); // insertion into the base tree
-  setHeight(v);            // compute its height
-  rebalance(v);
-  return Iterator(v);
+template <typename K, typename V>
+int AVLTree<K, V>::height(AVLNode<K, V> *node) {
+  if (node == nullptr)
+    return 0;
+  return node->height();
 }
-
-template <typename E> void AVLTree<E>::erase(const K &k) {
-  TPos v = this->finder(k, ST::root()); // find the base tree
-  if (Iterator(v) == ST::end())
-    throw DataException("Erase of nonexistent");
-  TPos w = this->eraser(v); // deleting it
-  rebalance(w);       // rebalance if it is necessary
+template <typename K, typename V>
+int AVLTree<K, V>::balanceFactor(AVLNode<K, V> *node) {
+  if (node == nullptr)
+    return 0;
+  return height(node->_left) - height(node->_right);
 }
+template <typename K, typename V>
+AVLNode<K, V> *AVLTree<K, V>::rightRotate(AVLNode<K, V> *y) {
+  AVLNode<K, V> *x = y->_left;
+  AVLNode<K, V> *t2 = x->_right;
 
-/* template <typename E> void AVLTree<E>::erase(const Iterator &p) { this->erase(*p); } */
+  // rotation
+  x->_right = y;
+  y->_left = t2;
 
-template <typename E> int AVLTree<E>::height(const TPos &v) const {
-  return (v.isExternal() ? 0 : v->height());
+  // update heights
+  y->setHeight(max(height(y->_left), height(y->_right)) + 1);
+  x->setHeight(max(height(x->_left), height(x->_right)) + 1);
+  return x; // return the new root
 }
+template <typename K, typename V>
+AVLNode<K, V> *AVLTree<K, V>::leftRotate(AVLNode<K, V> *x) {
+  AVLNode<K, V> *y = x->_right;
+  AVLNode<K, V> *t2 = y->_left;
 
-template <typename E> void AVLTree<E>::setHeight(TPos v) {
-  int hl = height(v.left());
-  int hr = height(v.right());
-  v->setHeight(1 + std::max(hl, hr));
+  // rotation
+  y->_left = x;
+  x->_right = t2;
+
+  // update heights
+  x->setHeight(max(height(x->_left), height(x->_right)) + 1);
+  y->setHeight(max(height(y->_left), height(y->_right)) + 1);
+  return y; // return the new root
 }
+template <typename K, typename V>
+AVLNode<K, V> *AVLTree<K, V>::insert(AVLNode<K, V> *node, const K key,
+                                     const V value) {
+  if (node == NULL)
+    return new AVLNode<K, V>(key, value);
+  if (key < node->_key)
+    node->_left = this->insert(node->_left, key, value);
+  else if (key > node->_key)
+    node->_right = this->insert(node->_right, key, value);
+  else
+    return node;
+  // update height of this ancestor node
+  node->setHeight(1 + max(height(node->_left), height(node->_right)));
+  int balance = balanceFactor(node);
 
-template <typename E> bool AVLTree<E>::isBalanced(const TPos &v) const {
-  int bal = height(v.left()) - height(v.right());
-  return ((-1 <= bal) && (bal <= 1));
+  // left heavy
+  if (balance > 1) {
+    if (balanceFactor(node->_left) >= 0)
+      return rightRotate(node);
+    else {
+      node->_left = leftRotate(node->_left);
+      return rightRotate(node);
+    }
+  }
+
+  // right heavy
+  if (balance < -1) {
+    if (balanceFactor(node->_right) <= 0)
+      return leftRotate(node);
+    else {
+      node->_right = rightRotate(node->_right);
+      return leftRotate(node);
+    }
+  }
+
+  return node;
 }
+template <typename K, typename V>
+AVLNode<K, V> *AVLTree<K, V>::minValueNode(AVLNode<K, V> *node) {
+  AVLNode<K, V> *current = node;
+  while (current->_left != nullptr)
+    current = current->_left;
+  return current;
+}
+template <typename K, typename V>
+AVLNode<K, V> *AVLTree<K, V>::deleteNode(AVLNode<K, V> *root, K key) {
+  if (root == nullptr)
+    return root;
 
-template <typename E>
-typename AVLTree<E>::TPos AVLTree<E>::tallGrandchild(const TPos &z) const {
-  TPos zl = z.right();
-  TPos zr = z.right();
-  if (height(zl) >= height(zr)) {
-    if (height(zl.left()) >= height(zl.right())) {
-      return zl.left();
+  if (key < root->_key)
+    root->_left = deleteNode(root->_left, key);
+  else if (key > root->_key)
+    root->_right = deleteNode(root->_right, key);
+  else {
+    // node with only one child or none
+    if ((root->_left == nullptr) || (root->_right == nullptr)) {
+      AVLNode<K, V> *temp = root->_left ? root->_left : root->_right;
+
+      if (temp == nullptr) {
+        delete root;
+        return nullptr;
+      } else {
+        AVLNode<K, V> *old = root;
+        root = temp;
+        delete old;
+      }
     } else {
-      return zl.right();
+      AVLNode<K, V> *temp = minValueNode(root->_right);
+      root->_key = temp->_key;
+      root->_right = deleteNode(root->_right, temp->_key);
     }
-  } else {
-    if (height(zr.right()) >= height(zr.left()))
-      return zr.right();
-    else
-      return zr.left();
+  }
+
+  if (root == nullptr)
+    return root;
+  root->setHeight(1 + max(height(root->_left), height(root->_right)));
+  int balance = balanceFactor(root);
+
+  // if the tree becomes unbalanced
+  if (balance > 1 && balanceFactor(root->_left) >= 0)
+    return rightRotate(root);
+  if (balance > 1 && balanceFactor(root->_left) < 0) {
+    root->_left = leftRotate(root->_left);
+    return rightRotate(root);
+  }
+
+  if (balance < -1 && balanceFactor(root->_right) <= 0)
+    return leftRotate(root);
+  if (balance < -1 && balanceFactor(root->_right) > 0) {
+    root->_right = rightRotate(root->_right);
+    return leftRotate(root);
+  }
+  return root;
+}
+template <typename K, typename V>
+void AVLTree<K, V>::inorder(AVLNode<K, V> *root) {
+  if (root != nullptr) {
+    inorder(root->_left);
+    cout << root->_key << " ";
+    inorder(root->_right);
   }
 }
+template <typename K, typename V>
+bool AVLTree<K, V>::search(AVLNode<K, V> *root, K key) {
+  if (root == nullptr)
+    return false;
+  if (root->_key == key)
+    return true;
+  if (key < root->_key)
+    return search(root->_left, key);
+  return search(root->_right, key);
+}
 
-template <typename E>
-void AVLTree<E>::rebalance(const TPos &v) { // utilidad de rebalance
-  TPos z = v;
-  while (!(z == ST::root())) { // rebalance hasta arriba
-    z = z.parent();
-    setHeight(z);         // calcular nueva altura
-    if (!isBalanced(z)) { // reestructuracion necesaria
-      TPos x = tallGrandchild(z);
-      z = this->restructure(x);
-      setHeight(z.left());
-      setHeight(z.right());
-      setHeight(z);
-    }
-  }
+template <typename K, typename V>
+void AVLTree<K, V>::insert(const K key, const V value) {
+  root = insert(root, key, value);
+}
+template <typename K, typename V> void AVLTree<K, V>::remove(const K key) {
+  root = deleteNode(root, key);
+}
+template <typename K, typename V> bool AVLTree<K, V>::search(K key) {
+  return search(root, key);
+}
+template <typename K, typename V> void AVLTree<K, V>::printInorder() {
+  inorder(root);
+  cout << endl;
 }
 
 #pragma region EXPLICIT_INSTATIATION
-template class AVLEntry<Entry<int, string>>;
-template class AVLTree<Entry<int, string>>;
+template class AVLNode<int, string>;
+template class AVLTree<int, string>;
 #pragma endregion EXPLICIT_INSTATIATION

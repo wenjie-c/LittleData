@@ -446,6 +446,73 @@ TEST(AVLTree, MainTest) {
   ASSERT_FALSE(avl.search(30));
 }
 
+TEST(Graph, IncidentTest)
+{
+  Graph<int> g;
+
+  g.insertVertex(11);
+  g.insertVertex(12);
+  g.insertVertex(13);
+  g.insertEdge(11,12);
+  g.insertEdge(12,13);
+
+  Vertex<int> * firstVertex = g.vertices()[0];
+  Vertex<int> * secondVertex = g.vertices()[1];
+  Edge<int> * firstEdge = g.edges()[0];
+  Edge<int> * secondEdge = g.edges()[1];
+  ASSERT_TRUE(firstEdge->isIncidentOn(firstVertex));
+  ASSERT_TRUE(firstEdge->isIncidentOn(secondVertex));
+  ASSERT_FALSE(secondEdge->isIncidentOn(firstVertex));
+
+}
+
+TEST(Graph, MainTest)
+{
+  Graph<int> g;
+
+  g.insertVertex(11); // 1
+  g.insertVertex(12); // 2
+  g.insertVertex(13); // 3
+  g.insertVertex(14); // 4
+  g.insertVertex(15); // 5
+
+  ASSERT_EQ(g.vertices().size(), 5);
+
+  g.insertEdge(11,12);
+  g.insertEdge(12, 13);
+  g.insertEdge(13,14);
+  g.insertEdge(14, 15);
+
+  ASSERT_EQ(g.edges().size(), 4);
+
+  Vertex<int> * firstVertex = g.vertices()[0];
+  Edge<int> * firstEdge = g.edges()[0];
+  cout << "First vertex has value " << firstVertex->getValue() << endl;
+  cout << "First edge links vertex with value " << firstEdge->endVertices()[0]->getValue() <<
+    " and "<< firstEdge->endVertices()[1]->getValue() << endl;
+  //bool condition = g.edges()[0].isIncidentOn(firstVertex);
+  ASSERT_TRUE(firstEdge->isIncidentOn(firstVertex));
+
+  Vertex<int> * secondVertex = g.vertices()[1];
+  Edge<int> * secondEdge = g.edges()[1];
+  Vertex<int> * fourthVertex = g.vertices()[3];
+  ASSERT_EQ(secondVertex->incidentEdges().size(), 2);
+
+
+  cout << "Second edge links vertex with value " << secondEdge->endVertices()[0]->getValue() <<
+    " and "<< secondEdge->endVertices()[1]->getValue() << endl;
+
+  g.insertEdge(15, 11);
+  g.eraseEdge(secondEdge);
+
+  ASSERT_EQ(secondVertex->incidentEdges().size(), 1);
+
+  g.eraseVertex(secondVertex);
+  ASSERT_EQ(g.vertices().size(), 4);
+  ASSERT_EQ(g.edges().size(), 3);
+  ASSERT_EQ(firstVertex->incidentEdges().size(), 1);
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

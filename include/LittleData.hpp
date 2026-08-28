@@ -14,3 +14,4 @@
 #include <AdaptPriorityQueue.hpp>
 #include <SearchTree.hpp>
 #include <AVLTree.hpp>
+#include <Graph.hpp>

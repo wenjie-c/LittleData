@@ -45,11 +45,11 @@ template <typename V> bool Edge<V>::isIncidentOn(const Vertex<V> *v) {
   return (_terminals[0] == v || _terminals[1] == v);
 }
 
-template <typename V> void Graph<V>::insertVertex(V value) {
-  _vertices.push_back(new Vertex<V>(value));
+template <typename V> void Graph<V>::insertVertex(const uint key,V value) {
+  _vertices.push_back(new Vertex<V>(key, value));
 }
 
-template <typename V> void Graph<V>::insertEdge(V a, V b, uint weight) {
+/* template <typename V> void Graph<V>::insertEdge(V a, V b, uint weight) {
   auto found =
       find_if(_vertices.begin(), _vertices.end(),
               [&](Vertex<V> *vertex) { return vertex->getValue() == a; });
@@ -67,12 +67,31 @@ template <typename V> void Graph<V>::insertEdge(V a, V b, uint weight) {
   _edges.push_back(new Edge<V>((*found), (*found2), weight));
   (*found)->_incident.push_back(_edges.back());
   (*found2)->_incident.push_back(_edges.back());
-}
+} */
 
 template <typename V> void Graph<V>::insertEdge(uint a, uint b, uint weight) {
-  if (a > _vertices.size() || b > _vertices.size())
-    throw DataException("Vertex number a or b is out of range.");
-  _edges.push_back(new Edge<V>(_vertices[a], _vertices[b], weight));
+  /* if (a > _vertices.size() || b > _vertices.size())
+    throw DataException("Vertex number a or b is out of range."); */
+    auto first = find(a);
+    auto second = find(b);
+  _edges.push_back(new Edge<V>(first,second, weight));
+  first->_incident.push_back(_edges.back());
+  second->_incident.push_back(_edges.back());
+
+}
+
+template <typename V>
+Vertex<V>* Graph<V>::find(const uint key) const
+{
+  auto found = find_if(_vertices.cbegin(), _vertices.cend(), [key](Vertex<V> * node){return node->getKey() == key;});
+  if(found == _vertices.cend()) throw DataException("Vertex with this key wasn't found");
+  return (*found);
+}
+
+template <typename V>
+Vertex<V>* Graph<V>::operator[](const uint key) const
+{
+  return find(key);
 }
 
 template <typename V> void Graph<V>::eraseVertex(Vertex<V> *vertex) {

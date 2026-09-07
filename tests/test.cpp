@@ -450,14 +450,14 @@ TEST(Graph, IncidentTest)
 {
   Graph<int> g;
 
-  g.insertVertex(11);
-  g.insertVertex(12);
-  g.insertVertex(13);
-  g.insertEdge(11,12);
-  g.insertEdge(12,13);
+  g.insertVertex(1,11);
+  g.insertVertex(2,12);
+  g.insertVertex(3,13);
+  g.insertEdge(1,2);
+  g.insertEdge(2,3);
 
-  Vertex<int> * firstVertex = g.vertices()[0];
-  Vertex<int> * secondVertex = g.vertices()[1];
+  Vertex<int> * firstVertex = g[1];
+  Vertex<int> * secondVertex = g[2];
   Edge<int> * firstEdge = g.edges()[0];
   Edge<int> * secondEdge = g.edges()[1];
   ASSERT_TRUE(firstEdge->isIncidentOn(firstVertex));
@@ -470,22 +470,22 @@ TEST(Graph, MainTest)
 {
   Graph<int> g;
 
-  g.insertVertex(11); // 1
-  g.insertVertex(12); // 2
-  g.insertVertex(13); // 3
-  g.insertVertex(14); // 4
-  g.insertVertex(15); // 5
+  g.insertVertex(1,11); // 1
+  g.insertVertex(2,12); // 2
+  g.insertVertex(3,13); // 3
+  g.insertVertex(4,14); // 4
+  g.insertVertex(5,15); // 5
 
   ASSERT_EQ(g.vertices().size(), 5);
 
-  g.insertEdge(11,12);
-  g.insertEdge(12, 13);
-  g.insertEdge(13,14);
-  g.insertEdge(14, 15);
+  g.insertEdge(1,2);
+  g.insertEdge(2, 3);
+  g.insertEdge(3,4);
+  g.insertEdge(4, 5);
 
   ASSERT_EQ(g.edges().size(), 4);
 
-  Vertex<int> * firstVertex = g.vertices()[0];
+  Vertex<int> * firstVertex = g[1];
   Edge<int> * firstEdge = g.edges()[0];
   cout << "First vertex has value " << firstVertex->getValue() << endl;
   cout << "First edge links vertex with value " << firstEdge->endVertices()[0]->getValue() <<
@@ -493,16 +493,16 @@ TEST(Graph, MainTest)
   //bool condition = g.edges()[0].isIncidentOn(firstVertex);
   ASSERT_TRUE(firstEdge->isIncidentOn(firstVertex));
 
-  Vertex<int> * secondVertex = g.vertices()[1];
+  Vertex<int> * secondVertex = g[2];
   Edge<int> * secondEdge = g.edges()[1];
-  Vertex<int> * fourthVertex = g.vertices()[3];
+  Vertex<int> * fourthVertex = g[4];
   ASSERT_EQ(secondVertex->incidentEdges().size(), 2);
 
 
   cout << "Second edge links vertex with value " << secondEdge->endVertices()[0]->getValue() <<
     " and "<< secondEdge->endVertices()[1]->getValue() << endl;
 
-  g.insertEdge(15, 11);
+  g.insertEdge(5, 1);
   g.eraseEdge(secondEdge);
 
   ASSERT_EQ(secondVertex->incidentEdges().size(), 1);

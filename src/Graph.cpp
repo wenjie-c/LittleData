@@ -1,6 +1,7 @@
 #include <Graph.hpp>
 #include <algorithm>
 #include <vector>
+#include <PVector.hpp>
 
 template <typename V>
 const vector<Edge<V> *> &Vertex<V>::incidentEdges() const {
@@ -46,7 +47,7 @@ template <typename V> bool Edge<V>::isIncidentOn(const Vertex<V> *v) {
 }
 
 template <typename V> void Graph<V>::insertVertex(const uint key,V value) {
-  _vertices.push_back(new Vertex<V>(key, value));
+  this->_vertices.push_back(new Vertex<V>(key, value));
 }
 
 /* template <typename V> void Graph<V>::insertEdge(V a, V b, uint weight) {
@@ -74,17 +75,17 @@ template <typename V> void Graph<V>::insertEdge(uint a, uint b, uint weight) {
     throw DataException("Vertex number a or b is out of range."); */
     auto first = find(a);
     auto second = find(b);
-  _edges.push_back(new Edge<V>(first,second, weight));
-  first->_incident.push_back(_edges.back());
-  second->_incident.push_back(_edges.back());
+  this->_edges.push_back(new Edge<V>(first,second, weight));
+  first->_incident.push_back(this->_edges.back());
+  second->_incident.push_back(this->_edges.back());
 
 }
 
 template <typename V>
 Vertex<V>* Graph<V>::find(const uint key) const
 {
-  auto found = find_if(_vertices.cbegin(), _vertices.cend(), [key](Vertex<V> * node){return node->getKey() == key;});
-  if(found == _vertices.cend()) throw DataException("Vertex with this key wasn't found");
+  auto found = find_if(this->_vertices.cbegin(), this->_vertices.cend(), [key](Vertex<V> * node){return node->getKey() == key;});
+  if(found == this->_vertices.cend()) throw DataException("Vertex with this key wasn't found");
   return (*found);
 }
 
@@ -96,9 +97,9 @@ Vertex<V>* Graph<V>::operator[](const uint key) const
 
 template <typename V> void Graph<V>::eraseVertex(Vertex<V> *vertex) {
 
-  auto found = find_if(_vertices.begin(), _vertices.end(),
+  auto found = find_if(this->_vertices.begin(), this->_vertices.end(),
                        [&](Vertex<V> *vertex2) { return vertex2 == vertex; });
-  if (found == _vertices.cend())
+  if (found == this->_vertices.cend())
     throw DataException("This graph does not have the vertex.");
 
   /* remove_if(_edges.begin(), _edges.end(),
@@ -112,7 +113,7 @@ template <typename V> void Graph<V>::eraseVertex(Vertex<V> *vertex) {
   (*found2)->opposite(*found)->eraseIncidentEdge(*found2); */
   auto incidents= (*found)->incidentEdges();
   delete (*found);
-  _vertices.erase(found);
+  this->_vertices.erase(found);
   for(Edge<V> * edge : incidents){
     eraseEdge(edge);
   }
@@ -125,18 +126,19 @@ template <typename V> void Graph<V>::eraseVertex(Vertex<V> *vertex) {
 template <typename V> void Graph<V>::eraseEdge(Edge<V> *edge) {
   /* remove_if(_edges.begin(), _edges.end(),
             [&](Edge<V> *edge2) { return (edge2) == (edge); }); */
-            auto found = find_if(_edges.begin(), _edges.end(),
+            auto found = find_if(this->_edges.begin(), this->_edges.end(),
           [&](Edge<V> * edge2){ return edge2 == edge ;});
-          for(int i = 0; i < _vertices.size(); i++){
-            if(edge->isIncidentOn(_vertices[i]))
-              _vertices[i]->eraseIncidentEdge(edge);
+          for(int i = 0; i < this->_vertices.size(); i++){
+            if(edge->isIncidentOn(this->_vertices[i]))
+              this->_vertices[i]->eraseIncidentEdge(edge);
           }
           delete(*found);
-          _edges.erase(found);
+          this->_edges.erase(found);
 }
 
 #pragma region EXPLICIT_INSTATIATION
 template class Vertex<int>;
 template class Edge<int>;
+template class IGraph<int>;
 template class Graph<int>;
 #pragma endregion EXPLICIT_INSTATIATION

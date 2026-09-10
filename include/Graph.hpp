@@ -5,7 +5,8 @@
 #ifndef Graph_HPP
 #define Graph_HPP
 
-template <typename V> class Graph;
+//template <typename V> class Graph;
+template <typename V> class IGraph;
 template <typename V> class Edge;
 
 template <typename V> class Vertex {
@@ -24,18 +25,18 @@ public:
 
   const uint &getKey() { return _key; }
 
-protected:
+/* protected: */ // Can't use protected due to I can't add Graph as friend class
   V _value;
   uint _key;
   vector<Edge<V> *> _incident;
   void eraseIncidentEdge(Edge<V> *incident);
-  friend class Graph<V>;
+  friend class IGraph<V>;
 };
 
 template <typename V> class Edge {
 public:
   Edge(Vertex<V> *a, Vertex<V> *b, const uint weight = 0)
-      : _weight(weight), _terminals({a, b}) {}
+      : _weight(weight), _terminals{a, b} {}
   const vector<Vertex<V> *> endVertices() const {
     return vector<Vertex<V> *>({_terminals[0], _terminals[1]});
   }
@@ -63,10 +64,66 @@ public:
 
   void setWeight(uint value) { _weight = value; }
 
-protected:
+/* protected: */ // Can't use protected due to I can't add Graph as friend class
   uint _weight;
   Vertex<V> *_terminals[2];
-  friend class Graph<V>;
+  friend class IGraph<V>;
+};
+
+template <typename V> class IGraph {
+  public:
+  IGraph() {}
+  virtual const vector<Vertex<V> *> &vertices() = 0;
+  virtual const vector<Edge<V> *> &edges() = 0;
+
+  /**
+   * @brief Insert a vertex with a value
+   *
+   * @param value The value
+   */
+   virtual void insertVertex(const uint key, V value) = 0;
+
+   /**
+    * @brief Insert an edge between vertex with value a and vertex with value b
+    * with a given weight.
+    *
+    * @param a
+    * @param b
+    * @param weight
+    */
+   /* void insertEdge(V a, V b, uint weight = 0); */
+ 
+   /**
+    * @brief Insert an edge between vertex number a and vertex number b with a
+    * given weight. The number corresponds to the node's key.
+    *
+    * @param a
+    * @param b
+    * @param weight
+    */
+   virtual void insertEdge(uint a, uint b, uint weight = 0) = 0;
+ 
+   virtual Vertex<V> *find(const uint key) const = 0;
+   virtual Vertex<V> *operator[](const uint key) const = 0;
+ 
+   virtual void eraseVertex(Vertex<V> *vertex) = 0;
+   virtual void eraseEdge(Edge<V> *edge) = 0;
+ 
+   /* ~IGraph<V>() {
+     for (int i = 0; i < _vertices.size(); i++) {
+       delete _vertices[i];
+     }
+     for (int i = 0; i < _edges.size(); i++) {
+       delete _edges[i];
+     }
+ 
+     _vertices.clear();
+     _edges.clear();
+   } */
+
+  protected:
+  /* vector<Vertex<V> *> _vertices;
+  vector<Edge<V> *> _edges; */
 };
 
 /**
@@ -74,19 +131,19 @@ protected:
  *
  * @tparam V
  */
-template <typename V> class Graph {
+template <typename V> class Graph: public IGraph<V>{
 public:
   Graph() {}
 
-  const vector<Vertex<V> *> &vertices() { return _vertices; }
-  const vector<Edge<V> *> &edges() { return _edges; }
+  const vector<Vertex<V> *> &vertices() override { return this->_vertices; }
+  const vector<Edge<V> *> &edges() override { return this->_edges; }
 
   /**
    * @brief Insert a vertex with a value
    *
    * @param value The value
    */
-  void insertVertex(const uint key, V value);
+  void insertVertex(const uint key, V value) override ;
 
   /**
    * @brief Insert an edge between vertex with value a and vertex with value b
@@ -96,7 +153,7 @@ public:
    * @param b
    * @param weight
    */
-  /* void insertEdge(V a, V b, uint weight = 0); */
+  /* void insertEdge(V a, V b, uint weight = 0) ; */
 
   /**
    * @brief Insert an edge between vertex number a and vertex number b with a
@@ -106,24 +163,24 @@ public:
    * @param b
    * @param weight
    */
-  void insertEdge(uint a, uint b, uint weight = 0);
+  void insertEdge(uint a, uint b, uint weight = 0) override ;
 
-  Vertex<V> *find(const uint key) const;
-  Vertex<V> *operator[](const uint key) const;
+  Vertex<V> *find(const uint key) const override;
+  Vertex<V> *operator[](const uint key) const ;
 
-  void eraseVertex(Vertex<V> *vertex);
-  void eraseEdge(Edge<V> *edge);
+  void eraseVertex(Vertex<V> *vertex) override;
+  void eraseEdge(Edge<V> *edge) override;
 
   ~Graph<V>() {
-    for (int i = 0; i < _vertices.size(); i++) {
-      delete _vertices[i];
+    for (int i = 0; i < this->_vertices.size(); i++) {
+      delete this->_vertices[i];
     }
-    for (int i = 0; i < _edges.size(); i++) {
-      delete _edges[i];
+    for (int i = 0; i < this->_edges.size(); i++) {
+      delete this->_edges[i];
     }
 
-    _vertices.clear();
-    _edges.clear();
+    this->_vertices.clear();
+    this->_edges.clear();
   }
 
 protected:

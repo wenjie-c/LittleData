@@ -1,3 +1,4 @@
+#include "Digraph.hpp"
 #include <LittleData.hpp>
 #include <cstddef>
 #include <gtest/gtest.h>
@@ -446,61 +447,59 @@ TEST(AVLTree, MainTest) {
   ASSERT_FALSE(avl.search(30));
 }
 
-TEST(Graph, IncidentTest)
-{
+TEST(Graph, IncidentTest) {
   Graph<int> g;
 
-  g.insertVertex(1,11);
-  g.insertVertex(2,12);
-  g.insertVertex(3,13);
-  g.insertEdge(1,2);
-  g.insertEdge(2,3);
+  g.insertVertex(1, 11);
+  g.insertVertex(2, 12);
+  g.insertVertex(3, 13);
+  g.insertEdge(1, 2);
+  g.insertEdge(2, 3);
 
-  Vertex<int> * firstVertex = g[1];
-  Vertex<int> * secondVertex = g[2];
-  Edge<int> * firstEdge = g.edges()[0];
-  Edge<int> * secondEdge = g.edges()[1];
+  Vertex<int> *firstVertex = g[1];
+  Vertex<int> *secondVertex = g[2];
+  IEdge<int> *firstEdge = g.edges()[0];
+  IEdge<int> *secondEdge = g.edges()[1];
   ASSERT_TRUE(firstEdge->isIncidentOn(firstVertex));
   ASSERT_TRUE(firstEdge->isIncidentOn(secondVertex));
   ASSERT_FALSE(secondEdge->isIncidentOn(firstVertex));
-
 }
 
-TEST(Graph, MainTest)
-{
+TEST(Graph, MainTest) {
   Graph<int> g;
 
-  g.insertVertex(1,11); // 1
-  g.insertVertex(2,12); // 2
-  g.insertVertex(3,13); // 3
-  g.insertVertex(4,14); // 4
-  g.insertVertex(5,15); // 5
+  g.insertVertex(1, 11); // 1
+  g.insertVertex(2, 12); // 2
+  g.insertVertex(3, 13); // 3
+  g.insertVertex(4, 14); // 4
+  g.insertVertex(5, 15); // 5
 
   ASSERT_EQ(g.vertices().size(), 5);
 
-  g.insertEdge(1,2);
+  g.insertEdge(1, 2);
   g.insertEdge(2, 3);
-  g.insertEdge(3,4);
+  g.insertEdge(3, 4);
   g.insertEdge(4, 5);
 
   ASSERT_EQ(g.edges().size(), 4);
 
-  Vertex<int> * firstVertex = g[1];
-  Edge<int> * firstEdge = g.edges()[0];
+  Vertex<int> *firstVertex = g[1];
+  IEdge<int> *firstEdge = g.edges()[0];
   cout << "First vertex has value " << firstVertex->getValue() << endl;
-  cout << "First edge links vertex with value " << firstEdge->endVertices()[0]->getValue() <<
-    " and "<< firstEdge->endVertices()[1]->getValue() << endl;
-  //bool condition = g.edges()[0].isIncidentOn(firstVertex);
+  cout << "First edge links vertex with value "
+       << firstEdge->endVertices()[0]->getValue() << " and "
+       << firstEdge->endVertices()[1]->getValue() << endl;
+  // bool condition = g.edges()[0].isIncidentOn(firstVertex);
   ASSERT_TRUE(firstEdge->isIncidentOn(firstVertex));
 
-  Vertex<int> * secondVertex = g[2];
-  Edge<int> * secondEdge = g.edges()[1];
-  Vertex<int> * fourthVertex = g[4];
+  Vertex<int> *secondVertex = g[2];
+  IEdge<int> *secondEdge = g.edges()[1];
+  Vertex<int> *fourthVertex = g[4];
   ASSERT_EQ(secondVertex->incidentEdges().size(), 2);
 
-
-  cout << "Second edge links vertex with value " << secondEdge->endVertices()[0]->getValue() <<
-    " and "<< secondEdge->endVertices()[1]->getValue() << endl;
+  cout << "Second edge links vertex with value "
+       << secondEdge->endVertices()[0]->getValue() << " and "
+       << secondEdge->endVertices()[1]->getValue() << endl;
 
   g.insertEdge(5, 1);
   g.eraseEdge(secondEdge);
@@ -511,6 +510,42 @@ TEST(Graph, MainTest)
   ASSERT_EQ(g.vertices().size(), 4);
   ASSERT_EQ(g.edges().size(), 3);
   ASSERT_EQ(firstVertex->incidentEdges().size(), 1);
+}
+
+TEST(DiGraph, WalkTest) {
+  DiGraph<int> g;
+
+  g.insertVertex(1, 11); // 1
+  g.insertVertex(2, 12); // 2
+  g.insertVertex(3, 13); // 3
+  g.insertVertex(4, 14); // 4
+  g.insertVertex(5, 15); // 5
+
+  ASSERT_EQ(g.vertices().size(), 5);
+
+  g.insertEdge(1, 2);
+  g.insertEdge(2, 3);
+  g.insertEdge(3, 4);
+  g.insertEdge(4, 5);
+  g.insertEdge(5, 1);
+
+  auto current = g.find(2);
+  while (current->getValue() != 11) {
+    cout << "Vertex is in key: " << current->getValue() << endl;
+    DiEdge<int> *outEdge = NULL;
+    int i = 0;
+    auto incidentEdges = current->incidentEdges();
+    do {
+
+      outEdge = static_cast<DiEdge<int> *>(incidentEdges[i]);
+      i++;
+      if (incidentEdges.size() == i)
+        break;
+    } while (outEdge->origin() != current);
+    current = outEdge->destination();
+  }
+
+  ASSERT_EQ(current->getKey(), 1);
 }
 
 int main(int argc, char **argv) {

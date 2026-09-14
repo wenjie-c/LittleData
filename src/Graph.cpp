@@ -4,7 +4,7 @@
 #include <PVector.hpp>
 
 template <typename V>
-const vector<Edge<V> *> &Vertex<V>::incidentEdges() const {
+const vector<IEdge<V> *> &Vertex<V>::incidentEdges() const {
   return _incident;
 }
 
@@ -18,7 +18,7 @@ template <typename V> bool Vertex<V>::isAdjacentTo(Vertex *vertex) {
 }
 
 template <typename V>
-void Vertex<V>::eraseIncidentEdge(Edge<V> * incident) {
+void Vertex<V>::eraseIncidentEdge(IEdge<V> * incident) {
   if(!incident->isIncidentOn(this)) throw DataException("This edge is not incident on this vertex.");
   auto found = find(_incident.begin(), _incident.end(), incident);
   _incident.erase(found);
@@ -35,11 +35,13 @@ template <typename V> Vertex<V> *Edge<V>::opposite(Vertex<V> *v) {
 
 
 
-template <typename V> bool Edge<V>::isAdjacentTo(const Edge<V> *edge) {
-  return (_terminals[0] == edge->_terminals[0] &&
-          _terminals[1] == edge->_terminals[1]) ||
-         (_terminals[1] == edge->_terminals[0] &&
-          _terminals[0] == edge->_terminals[1]);
+template <typename V> bool Edge<V>::isAdjacentTo(const IEdge<V> *edge) {
+  auto secondEdge = dynamic_cast<const Edge*>(edge);
+  if(secondEdge == NULL) throw DataException("You can't mix a no directed edge with a directed edge."); // or return false 
+  return (_terminals[0] == secondEdge->_terminals[0] &&
+          _terminals[1] == secondEdge->_terminals[1]) ||
+         (_terminals[1] == secondEdge->_terminals[0] &&
+          _terminals[0] == secondEdge->_terminals[1]);
 }
 
 template <typename V> bool Edge<V>::isIncidentOn(const Vertex<V> *v) {
@@ -114,7 +116,7 @@ template <typename V> void Graph<V>::eraseVertex(Vertex<V> *vertex) {
   auto incidents= (*found)->incidentEdges();
   delete (*found);
   this->_vertices.erase(found);
-  for(Edge<V> * edge : incidents){
+  for(IEdge<V> * edge : incidents){
     eraseEdge(edge);
   }
   
@@ -123,11 +125,11 @@ template <typename V> void Graph<V>::eraseVertex(Vertex<V> *vertex) {
   /* _edges.erase(found2); */
 }
 
-template <typename V> void Graph<V>::eraseEdge(Edge<V> *edge) {
+template <typename V> void Graph<V>::eraseEdge(IEdge<V> *edge) {
   /* remove_if(_edges.begin(), _edges.end(),
             [&](Edge<V> *edge2) { return (edge2) == (edge); }); */
             auto found = find_if(this->_edges.begin(), this->_edges.end(),
-          [&](Edge<V> * edge2){ return edge2 == edge ;});
+          [&](IEdge<V> * edge2){ return edge2 == edge ;});
           for(int i = 0; i < this->_vertices.size(); i++){
             if(edge->isIncidentOn(this->_vertices[i]))
               this->_vertices[i]->eraseIncidentEdge(edge);
@@ -138,6 +140,7 @@ template <typename V> void Graph<V>::eraseEdge(Edge<V> *edge) {
 
 #pragma region EXPLICIT_INSTATIATION
 template class Vertex<int>;
+template class IEdge<int>;
 template class Edge<int>;
 template class IGraph<int>;
 template class Graph<int>;

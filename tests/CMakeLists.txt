@@ -16,3 +16,5 @@ target_link_libraries(tests PRIVATE GTest::GTest LittleData)
 
 add_test(gtests tests)
 target_compile_features(tests PUBLIC cxx_std_14)
+
+add_test(unitTests tests)

@@ -15,3 +15,4 @@
 #include <SearchTree.hpp>
 #include <AVLTree.hpp>
 #include <Graph.hpp>
+#include <Digraph.hpp>

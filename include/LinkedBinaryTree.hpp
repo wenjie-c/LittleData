@@ -14,14 +14,14 @@ class LinkedBinaryTree : public IBinaryTree<E>
     public:
     class Position{
         private:
-        TreeNode<E> * v;
+        BinaryTreeNode<E> * v;
         public:
         /**
          * @brief Construct a new Position object
          * 
          * @param _v 
          */
-        Position(TreeNode<E> * _v = NULL);
+        Position(BinaryTreeNode<E> * _v = NULL);
         /**
          * @brief Get the element.
          * 
@@ -148,10 +148,10 @@ class LinkedBinaryTree : public IBinaryTree<E>
      * @param v 
      * @param pl 
      */
-    void preorder(TreeNode<E> * v, PositionList & pl) const;
+    void preorder(BinaryTreeNode<E> * v, PositionList & pl) const;
     Position leftEnd();
     private:
-    TreeNode<E> * _root;
+    BinaryTreeNode<E> * _root;
     int n;
 };
 

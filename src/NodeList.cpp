@@ -1,4 +1,5 @@
 #include <NodeList.hpp>
+#include <Tree.hpp>
 #include <cstdio>
 
 using namespace std;
@@ -112,6 +113,7 @@ NodeList<E>::NodeList(NodeList<E> & tobeCopied)
 #pragma region EXPLICIT_INSTATIATION
 template class NodeList<int>;
 template class LittleData::NodeList<pair<int,int>>;
+template class NodeList<TreeNode<int>*>;
 #pragma endregion EXPLICIT_INSTATIATION
 
 } // namespace LittleData

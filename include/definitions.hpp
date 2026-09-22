@@ -36,12 +36,12 @@ class IQueue{
 };
 
 template<typename E>
-struct TreeNode {
+struct BinaryTreeNode {
   E value;
-  TreeNode<E> * parent;
-  TreeNode<E> * left;
-  TreeNode<E> * right;
-  TreeNode() : value(), parent(NULL), left(NULL), right(NULL) {}
+  BinaryTreeNode<E> * parent;
+  BinaryTreeNode<E> * left;
+  BinaryTreeNode<E> * right;
+  BinaryTreeNode() : value(), parent(NULL), left(NULL), right(NULL) {}
 };
 
 template<typename E>

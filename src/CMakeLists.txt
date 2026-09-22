@@ -1,2 +1,2 @@
-add_library(LittleData STATIC primitives.cpp NodeList.cpp LinkedStack.cpp LinkedQueue.cpp LinkedDeque.cpp NodeSequence.cpp ArrayStack.cpp ArrayQueue.cpp LinkedBinaryTree.cpp ListPriorityQueue.cpp VectorCompleteTree.cpp HeapPriorityQueue.cpp AdaptPriorityQueue.cpp SearchTree.cpp AVLTree.cpp Graph.cpp DiGraph.cpp)
+add_library(LittleData STATIC primitives.cpp NodeList.cpp LinkedStack.cpp LinkedQueue.cpp LinkedDeque.cpp NodeSequence.cpp ArrayStack.cpp ArrayQueue.cpp LinkedBinaryTree.cpp ListPriorityQueue.cpp VectorCompleteTree.cpp HeapPriorityQueue.cpp AdaptPriorityQueue.cpp SearchTree.cpp AVLTree.cpp Graph.cpp DiGraph.cpp Tree.cpp)
 #target_include_directories(LittleData PUBLIC ${CMAKE_SOURCE_DIR}/include)

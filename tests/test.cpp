@@ -548,6 +548,22 @@ TEST(DiGraph, WalkTest) {
   ASSERT_EQ(current->getKey(), 1);
 }
 
+TEST(TreeTest, MainTest) {
+  Tree<int> t(1);
+  auto root = t.getRoot();
+  root->addChild(2);
+  root->addChild(3);
+  auto left = (*root->children.begin());
+  left->addChild(4);
+  (*left->children.begin())->addChild(5);
+  (*left->children.begin())->addChild(6);
+  (*left->children.begin())->addChild(7);
+  ASSERT_EQ(t.size(), 7);
+  string output;
+  ASSERT_NO_FATAL_FAILURE(output = t.drawTree());
+  cout << output << endl;
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

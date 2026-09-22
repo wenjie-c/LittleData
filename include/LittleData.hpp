@@ -16,3 +16,4 @@
 #include <AVLTree.hpp>
 #include <Graph.hpp>
 #include <Digraph.hpp>
+#include <Tree.hpp>

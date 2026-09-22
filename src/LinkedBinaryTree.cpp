@@ -4,7 +4,7 @@ using namespace std;
 namespace LittleData
 {
     template<typename E>
-    LinkedBinaryTree<E>::Position::Position(TreeNode<E> * _v) : v(_v) {} 
+    LinkedBinaryTree<E>::Position::Position(BinaryTreeNode<E> * _v) : v(_v) {} 
     template<typename E>
     E & LinkedBinaryTree<E>::Position::operator*()
     {
@@ -70,17 +70,17 @@ namespace LittleData
     void LinkedBinaryTree<E>::addRoot()
     {
         if(!empty()) throw DataException("The Linked Binary Tree is not empty.");
-        _root = new TreeNode<E>;
+        _root = new BinaryTreeNode<E>;
         n = 1;
     }
     template<typename E>
     void LinkedBinaryTree<E>::expandExternal(const Position & p)
     {
         if(!p.isExternal()) throw DataException("Node in position P is not an external Node.");
-        TreeNode<E> * v = p.v; // p node
-        v->left = new TreeNode<E>; // add a new left child
+        BinaryTreeNode<E> * v = p.v; // p node
+        v->left = new BinaryTreeNode<E>; // add a new left child
         v->left->parent = v; // v is its parent
-        v->right = new TreeNode<E>; // add a new right child
+        v->right = new BinaryTreeNode<E>; // add a new right child
         v->right->parent = v; // v is its parent
         n += 2;
     }
@@ -88,8 +88,8 @@ namespace LittleData
     typename LinkedBinaryTree<E>::Position LinkedBinaryTree<E>::removeAboveExternal(const Position & p)
     {
         if(!p.isExternal() || p.isRoot()) throw DataException("Node in position P is not an external Node or it is the root.");
-        TreeNode<E> * w = p.v; TreeNode<E> * v = w->parent; // get the node p amd its parent.
-        TreeNode<E> * sib = (w == v->left ? v->right : v->left);
+        BinaryTreeNode<E> * w = p.v; BinaryTreeNode<E> * v = w->parent; // get the node p amd its parent.
+        BinaryTreeNode<E> * sib = (w == v->left ? v->right : v->left);
         if(v == _root) // is child of root?
         {
             _root = sib; // turn the root sibling
@@ -97,7 +97,7 @@ namespace LittleData
         }
         else
         {
-            TreeNode<E> * gpar = v->parent;
+            BinaryTreeNode<E> * gpar = v->parent;
             if(v == gpar->left) gpar->left = sib; // replace parent for sibling
             else gpar->right = sib;
             sib->parent = gpar;
@@ -108,7 +108,7 @@ namespace LittleData
     }
     
     template<typename E>
-    void LinkedBinaryTree<E>::preorder(TreeNode<E> * v, PositionList & pl) const
+    void LinkedBinaryTree<E>::preorder(BinaryTreeNode<E> * v, PositionList & pl) const
     {
         pl.addBack(Position(v)); // add this node
         if(v->left != NULL) // traverse the left subtree

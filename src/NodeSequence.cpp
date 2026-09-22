@@ -1,4 +1,5 @@
 #include <NodeSequence.hpp>
+#include <Tree.hpp>
 #include <iterator>
 using namespace std;
 
@@ -24,4 +25,5 @@ int LittleData::NodeSequence<E>::indexOf(const typename LittleData::NodeList<E>:
 
 #pragma region EXPLICIT_INSTATIATION
 template class LittleData::NodeSequence<int>;
+template class LittleData::NodeSequence<TreeNode<int>*>;
 #pragma endregion EXPLICIT_INSTATIATION

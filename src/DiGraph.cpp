@@ -8,14 +8,14 @@ template <typename V> Vertex<V> *DiEdge<V>::opposite(Vertex<V> *v) {
   throw DataException("This edge is not incident on this vertex.");
 }
 
-template <typename V> bool DiEdge<V>::isAdjacentTo(const IEdge<V> *edge) {
+template <typename V> bool DiEdge<V>::isAdjacentTo(const IEdge<V> *edge) const {
   const DiEdge<V>* diedge = dynamic_cast<const DiEdge<V>*>(edge);
   if(diedge == NULL) return false;
   return (diedge->_origin == this->_origin &&
           diedge->_destination == this->_destination);
 }
 
-template <typename V> bool DiEdge<V>::isIncidentOn(const Vertex<V> *v) {
+template <typename V> bool DiEdge<V>::isIncidentOn(const Vertex<V> *v) const {
     return _origin == v || _destination == v;
 }
 

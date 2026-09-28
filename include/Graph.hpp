@@ -15,7 +15,7 @@ public:
 
   const vector<IEdge<V> *> &incidentEdges() const;
 
-  bool isAdjacentTo(Vertex *vertex);
+  bool isAdjacentTo(Vertex *vertex) const;
 
   /* const V &operator*() { return getValue(); } */
 
@@ -38,8 +38,8 @@ template <typename V> class IEdge {
 public:
   virtual const vector<Vertex<V> *> endVertices() = 0;
   virtual Vertex<V> *opposite(Vertex<V> *v) = 0;
-  virtual bool isAdjacentTo(const IEdge<V> *edge) = 0;
-  virtual bool isIncidentOn(const Vertex<V> *v) = 0;
+  virtual bool isAdjacentTo(const IEdge<V> *edge) const = 0;
+  virtual bool isIncidentOn(const Vertex<V> *v) const = 0;
   virtual const uint &getWeight() = 0;
   virtual void setWeight(uint value) = 0;
 
@@ -62,7 +62,7 @@ public:
    * @return true
    * @return false
    */
-  bool isAdjacentTo(const IEdge<V> *edge) override;
+  bool isAdjacentTo(const IEdge<V> *edge) const override;
 
   /**
    * @brief Check if this edge is incident on vertex v.
@@ -71,7 +71,7 @@ public:
    * @return true
    * @return false
    */
-  bool isIncidentOn(const Vertex<V> *v) override;
+  bool isIncidentOn(const Vertex<V> *v) const override;
 
   const uint &getWeight() override { return _weight; }
 

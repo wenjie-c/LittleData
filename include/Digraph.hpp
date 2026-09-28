@@ -17,8 +17,8 @@ public:
     return {_origin, _destination};
   }
   Vertex<V> *opposite(Vertex<V> *v) override;
-  bool isAdjacentTo(const IEdge<V> *edge) override;
-  bool isIncidentOn(const Vertex<V> *v) override;
+  bool isAdjacentTo(const IEdge<V> *edge) const override;
+  bool isIncidentOn(const Vertex<V> *v) const override;
   const uint &getWeight() override {return _weight;}
   void setWeight(uint value) override {_weight = value;}
   Vertex<V> *origin() { return _origin; }

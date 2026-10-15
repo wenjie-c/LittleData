@@ -4,7 +4,7 @@
 #include <Graph.hpp>
 
 /**
- * @brief Directed Edge
+ * @brief The Directed Edge implementation.
  *
  * @tparam V
  */
@@ -19,10 +19,10 @@ public:
   Vertex<V> *opposite(Vertex<V> *v) override;
   bool isAdjacentTo(const IEdge<V> *edge) const override;
   bool isIncidentOn(const Vertex<V> *v) const override;
-  const uint &getWeight() override {return _weight;}
-  void setWeight(uint value) override {_weight = value;}
+  const uint &getWeight() override { return _weight; }
+  void setWeight(uint value) override { _weight = value; }
   Vertex<V> *origin() { return _origin; }
-  Vertex<V> *destination()  { return _destination; }
+  Vertex<V> *destination() { return _destination; }
 
 protected:
   uint _weight;
@@ -30,6 +30,11 @@ protected:
   Vertex<V> *_destination;
 };
 
+/**
+ * @brief The Directed Graph implementation
+ *
+ * @tparam V
+ */
 template <typename V> class DiGraph : public Graph<V> {
 public:
   DiGraph() {}

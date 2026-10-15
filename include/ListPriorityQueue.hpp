@@ -10,17 +10,15 @@ using namespace std;
 
 namespace LittleData {
 
-
-  
 /**
- * @brief PriorityQueue implemented using NodeList.
+ * @brief A Priority Queue based on NodeList.
  *
  * @tparam E Element Type
  * @tparam C Comparator Type
  */
 template <typename E, typename C>
 class ListPriorityQueue : IPriorityQueue<E, C> {
-  public:
+public:
   /**
    * @brief Size of the priority queue.
    *
@@ -61,7 +59,6 @@ private:
 
 typedef pair<int, int> Pair; // Key-Value pair.
 
-
 } // namespace LittleData
 
-#endif LISTPRIORITYQUEUE_HPP
+#endif // LISTPRIORITYQUEUE_HPP

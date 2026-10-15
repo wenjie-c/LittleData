@@ -1,6 +1,6 @@
+#include <Comparator.hpp>
 #include <VectorCompleteTree.hpp>
 #include <definitions.hpp>
-#include <Comparator.hpp>
 #include <iostream>
 
 using namespace std;
@@ -10,7 +10,7 @@ using namespace std;
 
 namespace LittleData {
 
-  /**
+/**
  * @brief PriorityQueue implemented using Heap or vectorCompleteTree.
  *
  * @tparam E Element Type
@@ -27,7 +27,7 @@ public:
    *
    * @return int
    */
-  int size() const ;
+  int size() const;
 
   /**
    * @brief Is the priority queue empty?
@@ -35,27 +35,27 @@ public:
    * @return true
    * @return false
    */
-  bool empty() const ;
+  bool empty() const;
 
   /**
    * @brief Insert and sort the element.
    *
    * @param e The element.
    */
-  void insert(const E &e) ;
+  void insert(const E &e);
 
   /**
    * @brief Get the smallest key element.
    *
    * @return const E&
    */
-  const E &min() ;
+  const E &min();
 
   /**
    * @brief Remove the smallest key element.
    *
    */
-  void removeMin() ;
+  void removeMin();
 
 private:
 #pragma region HEAPPRIORITYQUEUE_VARIABLES
@@ -67,4 +67,4 @@ private:
 };
 
 } // namespace LittleData
-#endif HEAP_PRIORITY_QUEUE_HPP
+#endif // HEAP_PRIORITY_QUEUE_HPP

@@ -6,16 +6,15 @@
 using namespace std;
 
 namespace LittleData {
-  
-  /**
-   * @brief Implementation of a List with doubly ended list and iterators
-   * 
-   * @tparam E 
-   */
+
+/**
+ * @brief Implementation of a List with doubly ended list and iterators, it is
+ * also an extended Deque.
+ *
+ * @tparam E
+ */
 template <typename E> class NodeList {
 private:
-
-
 public:
   class Iterator {
   public:
@@ -57,106 +56,107 @@ public:
      * @brief Gives access to NodeList
      *
      */
-     
-     friend class NodeList<E>;
-     private:
+
+    friend class NodeList<E>;
+
+  private:
     Node<E> *v;
     /**
      * @brief Construct a new Iterator object
      *
      * @param u
      */
-    Iterator(Node<E> * u);
+    Iterator(Node<E> *u);
   };
 
-  public:
+public:
   /**
    * @brief Construct a new Node List< E> object
-   * 
+   *
    */
   NodeList<E>();
   /**
    * @brief Size of the list.
-   * 
-   * @return int 
+   *
+   * @return int
    */
   int size() const;
 
   /**
    * @brief Is the list empty?
-   * 
-   * @return true 
-   * @return false 
+   *
+   * @return true
+   * @return false
    */
   bool empty() const;
 
   /**
    * @brief Initial position.
-   * 
-   * @return Iterator 
+   *
+   * @return Iterator
    */
   Iterator begin() const;
 
   /**
    * @brief Final position (just after it).
-   * 
-   * @return Iterator 
+   *
+   * @return Iterator
    */
   Iterator end() const;
 
   /**
    * @brief Insert to frontal.
-   * 
-   * @param data 
+   *
+   * @param data
    */
-  void insertFront(const E & data);
+  void insertFront(const E &data);
 
   /**
    * @brief Insert to end.
-   * 
-   * @param data 
+   *
+   * @param data
    */
-  void insertBack(const E & data);
+  void insertBack(const E &data);
 
   /**
    * @brief Insert data before p.
-   * 
-   * @param p 
-   * @param data 
+   *
+   * @param p
+   * @param data
    */
-  void insert(const Iterator & p, const E & data);
+  void insert(const Iterator &p, const E &data);
 
   /**
    * @brief Erase the frontal element.
-   * 
+   *
    */
   void eraseFront();
 
   /**
    * @brief Erase the last element.
-   * 
+   *
    */
   void eraseBack();
   /**
    * @brief Erase p element.
-   * 
-   * @param p 
+   *
+   * @param p
    */
   void erase(const Iterator &p);
-  
-  NodeList<E>(NodeList<E> & tobeCopied);
+
+  NodeList<E>(NodeList<E> &tobeCopied);
 
   // --- Housekeeping functions ---
 
   ~NodeList<E>();
 
   // --- End of housekeeping functions ---
-  private:
+private:
   int n;
-  Node<E> * header;
-  Node<E> * trailer;
+  Node<E> *header;
+  Node<E> *trailer;
 };
 
 } // namespace LittleData
 
-#endif ITERATOR_HPP
+#endif // ITERATOR_HPP

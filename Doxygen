@@ -1,0 +1,8 @@
+PROJECT_NAME=LittleData
+PROJECT_NUMBER=vbeta5.0
+PROJECT_BRIEF="A little data structures library based on Michael T. Goodrich's book"
+OUTPUT_DIRECTORY=docs/
+GENERATE_LATEX=NO
+GENERATE_RTF=YES
+INPUT=src include
+RECURSIVE=YES

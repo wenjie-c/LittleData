@@ -11,16 +11,15 @@ namespace LittleData {
 
 /**
  * @brief Complete Binary Tree or Heap based on a std::vector.
- * 
- * @tparam E 
+ *
+ * @tparam E
  */
 template <typename E> class VectorCompleteTree : public IBinaryTree<E> {
 private:
-  //NodeList<E> V;
+  // NodeList<E> V;
   vector<E> V;
 
 public:
-
   VectorCompleteTree() : V(1) {}
   // class Position;
   typedef typename vector<E>::iterator Position;
@@ -80,38 +79,38 @@ public:
 
   /**
    * @brief Get the position of the root.
-   * 
-   * @return Position 
+   *
+   * @return Position
    */
   Position root();
 
   /**
    * @brief Get the last position of teh tree.
-   * 
-   * @return Position 
+   *
+   * @return Position
    */
   Position last();
 
   /**
    * @brief Add a new last node.
-   * 
-   * @param e 
+   *
+   * @param e
    */
-  void addLast(const E & e);
+  void addLast(const E &e);
 
   /**
    * @brief Remove the last node.
-   * 
+   *
    */
   void removeLast();
 
   /**
    * @brief Swaps the content between node p and node q.
-   * 
-   * @param p 
-   * @param q 
+   *
+   * @param p
+   * @param q
    */
-  void swap(const Position & p, const Position & q);
+  void swap(const Position &p, const Position &q);
 
 protected:
   /**
@@ -120,10 +119,7 @@ protected:
    * @param i
    * @return Position
    */
-  Position pos(int i)
-  {
-    return V.begin() + i;
-  }
+  Position pos(int i) { return V.begin() + i; }
 
   /**
    * @brief Map a position to an index.
@@ -131,12 +127,9 @@ protected:
    * @param p
    * @return int
    */
-  int idx(const Position &p) const
-  {
-    return p - V.begin();
-  }
+  int idx(const Position &p) const { return p - V.begin(); }
 };
 
 } // namespace LittleData
 
-#endif COMPLETE_TREE_HPP
+#endif // COMPLETE_TREE_HPP

@@ -10,6 +10,11 @@ namespace LittleData
 
 enum {ARRAYSTACK_CAPACITY = 64};
 
+/**
+ * @brief A Stack structure based on array.
+ * 
+ * @tparam E 
+ */
 template<typename E>
 class ArrayStack : public IStack<E>
 {
@@ -66,4 +71,4 @@ class ArrayStack : public IStack<E>
 
 }
 
-#endif ARRAYSTACK_HPP
+#endif // ARRAYSTACK_HPP

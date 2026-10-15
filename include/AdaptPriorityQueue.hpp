@@ -6,6 +6,12 @@
 #define ADAPT_PRIORITY_QUEUE_HPP
 
 namespace LittleData {
+  /**
+   * @brief An extended Priority Queue based on NodeList.
+   * 
+   * @tparam E Value type
+   * @tparam C Comparator type Comparator class derived
+   */
 template <typename E, typename C>
 class AdaptPriorityQueue //: public IPriorityQueue<E, C> 
 {

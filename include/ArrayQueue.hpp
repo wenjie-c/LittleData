@@ -6,6 +6,11 @@ namespace LittleData {
 
 enum {ARRAYQUEUE_CAPACITY = 64} ;
 
+/**
+ * @brief A Queue structure based on array.
+ * 
+ * @tparam E 
+ */
 template <typename E>
 class ArrayQueue : public IQueue<E> {
 public:

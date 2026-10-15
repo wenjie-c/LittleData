@@ -47,7 +47,7 @@ template <typename V> bool Edge<V>::isAdjacentTo(const IEdge<V> *edge) const {
           _terminals[0] == secondEdge->_terminals[1]);
 }
 
-template <typename V> bool Edge<V>::isIncidentOn(const Vertex<V> *v) const{
+template <typename V> bool Edge<V>::isIncidentOn(const Vertex<V> *v) const {
   return (_terminals[0] == v || _terminals[1] == v);
 }
 

@@ -4,6 +4,12 @@
 #include <LinkedBinaryTree.hpp>
 #include <string>
 
+/**
+ * @brief A binary search tree
+ * 
+ * @tparam K Key
+ * @tparam V Value
+ */
 template <typename K, typename V> class Entry {
 
   public:

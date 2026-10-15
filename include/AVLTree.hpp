@@ -7,6 +7,12 @@
 // This source code is based on
 // https://www.geeksforgeeks.org/cpp/cpp-program-to-implement-avl-tree/
 
+/**
+ * @brief An AVLTree node
+ *
+ * @tparam K Key
+ * @tparam V Value
+ */
 template <typename K, typename V> class AVLTree;
 
 /**
@@ -40,6 +46,12 @@ public:
 #ifndef AVLTree_HPP
 #define AVLTree_HPP
 
+/**
+ * @brief An AVLTree.
+ *
+ * @tparam K Key type of each node
+ * @tparam V Value type of each node
+ */
 template <typename K, typename V> class AVLTree {
 private:
   AVLNode<K, V> *root;
@@ -56,9 +68,35 @@ private:
 
 public:
   AVLTree<K, V>() : root(NULL) {}
+
+  /**
+   * @brief Insert a new entry providing key and value pair.
+   *
+   * @param key
+   * @param value
+   */
   void insert(const K key, const V value);
+
+  /**
+   * @brief Remove the entry with such key.
+   *
+   * @param key
+   */
   void remove(const K key);
+
+  /**
+   * @brief Check wheter the key exists in the AVLTree.
+   *
+   * @param key
+   * @return true
+   * @return false
+   */
   bool search(K key);
+
+  /**
+   * @brief Print the tree using inorder method.
+   *
+   */
   void printInorder();
 };
 #endif // AVLTree_HPP

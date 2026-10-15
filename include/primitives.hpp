@@ -8,6 +8,10 @@ using namespace std;
 
 //#define throw(...) //deprecated
 
+/**
+ * @brief Data structures expection
+ * 
+ */
 class DataException : std::exception {
 public:
   const char *message;
@@ -111,4 +115,5 @@ private:
   SNode<E> *cursor;
 };
 
-#endif PRIMITIVES
+
+#endif //PRIMITIVES
